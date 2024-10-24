@@ -1,8 +1,6 @@
 # Adversarial Stickers: A Stealthy Attack Method in the Physical World
 This repository contains the code for Adversarial Stickers introduced in the following paper
 [Adversarial Stickers: A Stealthy Attack Method in the Physical World](https://ieeexplore.ieee.org/abstract/document/9779913) (TPAMI 2022)
-This project explores adversarial attacks on facial recognition systems using stickers. The `predict.py` script implements key methods such as FGSM-based adversarial attacks, adding global noise, semantic attacks (modifying brightness, contrast, and color), and applying bilateral filtering to enhance perturbations. The script also includes functions to handle sticker manipulation on facial regions detected by MTCNN and classification via FaceNet.
-
 ## Preparation
 
 ### Environment Settings:
@@ -16,7 +14,9 @@ This project is tested under the following environment settings:
 
 ### Data Preparation：
 + face
-Please download the dataset ([LFW](http://vis-www.cs.umass.edu/lfw/), [CelebA](http://mmlab.ie.cuhk.edu.hk/projects/CelebA.html)) and place it in ```./datasets/```.
+Please download the dataset ([LFW](http://vis-www.cs.umass.edu/lfw/), as mentioned in the paper， we should find the datasets in lfw that contains 5749 Folders with person's name， the correct link is http://vis-www.cs.umass.edu/lfw/lfw.tgz.
+
+[CelebA](http://mmlab.ie.cuhk.edu.hk/projects/CelebA.html)) and place it in ```./datasets/```.
 
 The directory structure example is:
 ```
@@ -28,11 +28,28 @@ datasets
    ---pic003  
 ```
 + stickers
-Prepare the pre-defined stickers and place them in ```./stickers/```.
+Stickers used for adversarial attacks should be placed in the `./stickers/` directory. These stickers will be resized, rotated, and manipulated for attacks as specified in the `predict.py` script.
+
+The directory structure should look like this:
+
+stickers
+ --sticker1.png
+ --sticker2.png
+
+Prepare the pre-defined stickers and place them in ```./stickers/```. In our project, we choose bs13.png as the final sticker.
+```python
+class Config(object):
+    bound = 15  # Critical value of the gap between label1 and label2
+    id_threat = 1  # ID of threat model in ['arcface', 'facenet', 'sphereface', 'cosface']
+    sticker_name = 'bs13'  # Sticker used for the attack (Change the figure name here)
+    scale = 12  # The scale of the sticker
+```
+
 ### Model Preparation：
 Tool models ([FaceNet](https://github.com/timesler/facenet-pytorch), [CosFace](https://github.com/deepinsight/insightface/tree/master/recognition), [SphereFace](https://github.com/clcarwin/sphereface\_pytorch)) should be placed in ```./models/```
 
 The corresponding ```./utils/predict.py``` should be changed as needed.
+
 ### Other Necessary Tools:
 + Python tools for [3D face](https://github.com/YadiraF/face3d/tree/master/face3d)
 + BFM Data: ```./BFM/BFM.mat```
@@ -42,9 +59,11 @@ The corresponding ```./utils/predict.py``` should be changed as needed.
 Hyperparameter settings: ```./utils/config.py```
 
 Running this command for attacks:
+
 ```
 python attack_single.py
 ```
+
 ## Citation
 If you find our methods useful, please consider citing:
 ```
@@ -56,4 +75,3 @@ If you find our methods useful, please consider citing:
   publisher={IEEE}
 }
 ```
-
