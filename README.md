@@ -1,6 +1,8 @@
 # Adversarial Stickers: A Stealthy Attack Method in the Physical World
 This repository contains the code for Adversarial Stickers introduced in the following paper
 [Adversarial Stickers: A Stealthy Attack Method in the Physical World](https://ieeexplore.ieee.org/abstract/document/9779913) (TPAMI 2022)
+This project explores adversarial attacks on facial recognition systems using stickers. The `predict.py` script implements key methods such as FGSM-based adversarial attacks, adding global noise, semantic attacks (modifying brightness, contrast, and color), and applying bilateral filtering to enhance perturbations. The script also includes functions to handle sticker manipulation on facial regions detected by MTCNN and classification via FaceNet.
+
 ## Preparation
 
 ### Environment Settings:
